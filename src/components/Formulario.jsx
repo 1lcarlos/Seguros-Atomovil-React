@@ -1,11 +1,23 @@
 import { Fragment } from "react";
 import { MARCAS, YEARS, PLANES } from "../constans";
 import useCotizador from "../hooks/useCotizador";
+import Error from "./Error";
 const Formulario = () => {
-  const { datos, handleChangeDatos } = useCotizador();
+  const { datos, error, setError, handleChangeDatos, cotizarSeguro } =
+    useCotizador();
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (Object.values(datos).includes("")) {
+      setError("Todos los campos son obligatorios");
+      return;
+    }
+    setError("");
+    cotizarSeguro();
+  };
   return (
     <>
-      <form action="">
+      {error && <Error />}
+      <form action="" onSubmit={handleSubmit}>
         <div className=" my-5">
           <label
             htmlFor=""
